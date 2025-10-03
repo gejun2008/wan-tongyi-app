@@ -1,0 +1,21 @@
+{
+  "name": "momentswap",
+  "version": "0.1.0",
+  "description": "MomentSwap - Wan-AI/Wan2.2-Animate face swapping MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test tests/unit",
+    "test:e2e": "WAN_MOCK_MODE=true node --test tests/e2e",
+    "test:all": "npm run test && npm run test:e2e"
+  },
+  "keywords": [
+    "wan",
+    "huggingface",
+    "video",
+    "face-swap"
+  ],
+  "author": "",
+  "license": "MIT"
+}
