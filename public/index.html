@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>瞬时变身 · MomentSwap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-950 text-white min-h-screen">
+    <header class="bg-slate-900 border-b border-slate-800">
+      <div class="max-w-5xl mx-auto px-4 py-6">
+        <h1 class="text-3xl font-semibold">瞬时变身（MomentSwap）</h1>
+        <p class="text-slate-300 mt-2">
+          使用 Wan-AI/Wan2.2-Animate 模型，将任意面孔替换到短视频中的人物上。
+        </p>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+      <section class="grid gap-6 md:grid-cols-2">
+        <article class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
+          <h2 class="text-xl font-medium">上传素材</h2>
+          <form id="generateForm" class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium text-slate-300" for="refImageInput">
+                目标面孔图片（JPG/PNG）
+              </label>
+              <input
+                type="file"
+                id="refImageInput"
+                name="refImage"
+                accept="image/*"
+                class="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2"
+                required
+              />
+              <p class="text-xs text-slate-500 mt-1">请确保图像为清晰正面肖像。</p>
+              <img id="refPreview" alt="面孔预览" class="hidden mt-3 w-40 h-40 object-cover rounded-lg border border-slate-800" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-slate-300" for="sourceVideoInput">
+                源视频（5-10 秒 MP4/MOV）
+              </label>
+              <input
+                type="file"
+                id="sourceVideoInput"
+                name="sourceVideo"
+                accept="video/mp4,video/quicktime,video/*"
+                class="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2"
+                required
+              />
+              <p class="text-xs text-slate-500 mt-1">建议选择单人短视频，避免复杂背景。</p>
+              <video id="videoPreview" class="hidden mt-3 w-full rounded-lg border border-slate-800" controls></video>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="block text-sm">
+                <span class="text-slate-300">模式</span>
+                <select id="modelMode" class="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2">
+                  <option value="wan2.2-animate-move">Move（默认）</option>
+                  <option value="wan2.2-animate-mix">Mix</option>
+                </select>
+              </label>
+              <label class="block text-sm">
+                <span class="text-slate-300">推理质量</span>
+                <select id="modelQuality" class="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2">
+                  <option value="wan-pro">Pro（默认）</option>
+                  <option value="wan-std">Standard</option>
+                </select>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-violet-600 hover:bg-violet-500 transition-colors font-semibold py-3 rounded-lg"
+            >
+              开始生成
+            </button>
+          </form>
+        </article>
+
+        <article class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
+          <h2 class="text-xl font-medium">进度与结果</h2>
+          <div id="statusPanel" class="space-y-3 text-sm text-slate-300">
+            <p id="statusMessage">等待输入...</p>
+            <div id="progressIndicator" class="hidden">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-3 w-3 animate-ping rounded-full bg-violet-400"></span>
+                <span>模型正在处理，大约需要 30-60 秒。</span>
+              </div>
+            </div>
+          </div>
+          <video id="resultVideo" class="hidden w-full rounded-lg border border-slate-800" controls></video>
+          <a
+            id="downloadButton"
+            href="#"
+            download="momentswap.mp4"
+            class="hidden inline-flex items-center justify-center px-4 py-2 rounded-lg border border-violet-500 text-violet-300 hover:bg-violet-500/20"
+          >
+            下载生成视频
+          </a>
+        </article>
+      </section>
+
+      <section class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-3 text-sm text-slate-300">
+        <h2 class="text-lg font-medium text-white">使用提示</h2>
+        <ul class="list-disc list-inside space-y-2">
+          <li>上传的视频应为单人镜头，面部清晰可见。</li>
+          <li>确保目标面孔图片光照均匀，无夸张表情，以获得更稳定的结果。</li>
+          <li>生成结果仅作娱乐用途，请尊重肖像权与隐私。</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="py-8 text-center text-xs text-slate-600">
+      © 2025 MomentSwap · Wan-AI/Wan2.2-Animate 概念验证
+    </footer>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
